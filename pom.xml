@@ -22,6 +22,7 @@
         <spring-security-oauth2.version>2.3.5.RELEASE</spring-security-oauth2.version>
         <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
         <org.liquibase.version>3.6.3</org.liquibase.version>
+        <guava.version>23.0</guava.version>
     </properties>
     
     <dependencies>
@@ -73,6 +74,13 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
             <version>${org.liquibase.version}</version>
+        </dependency>
+    
+        <!--UTILS-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 

@@ -39,11 +39,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       return userMikhalitsyn;
     }
 
-    Optional<User> user = userRepository.getUserDetails(loginId);
+    Optional<User> user = userRepository.findOneByLogin(loginId);
     return user.map(u -> {
       Set<SimpleGrantedAuthority> authorities = new HashSet<>();
       authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-      return new Oauth2UserDetails(u.getUsername(), u.getPassword(), true, authorities);
+      return new Oauth2UserDetails(u.getLogin(), u.getPassword(), true, authorities);
     }).orElseThrow(() -> new UsernameNotFoundException("User not found :" + loginId));
   }
 

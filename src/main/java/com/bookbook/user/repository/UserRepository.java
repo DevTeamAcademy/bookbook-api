@@ -1,15 +1,14 @@
 package com.bookbook.user.repository;
 
 import com.bookbook.user.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, String> {
 
-  public Optional<User> getUserDetails(String username) {
-    return Optional.empty();
-  }
+  Optional<User> findOneByLogin(String login);
 
 }

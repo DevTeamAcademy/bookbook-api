@@ -8,13 +8,13 @@ import java.util.Collection;
 import java.util.Set;
 
 public class Oauth2UserDetails implements UserDetails {
-  private final String loginId;
+  private final String login;
   private final String password;
   private final boolean enabled;
   private final Set<SimpleGrantedAuthority> authorities;
 
-  public Oauth2UserDetails(String loginId, String password, boolean enabled, Set<SimpleGrantedAuthority> authorities) {
-    this.loginId = loginId;
+  public Oauth2UserDetails(String login, String password, boolean enabled, Set<SimpleGrantedAuthority> authorities) {
+    this.login = login;
     this.password = password;
     this.enabled = enabled;
     this.authorities = authorities;
@@ -32,7 +32,7 @@ public class Oauth2UserDetails implements UserDetails {
 
   @Override
   public String getUsername() {
-    return loginId;
+    return login;
   }
 
   @Override
@@ -57,7 +57,7 @@ public class Oauth2UserDetails implements UserDetails {
 
   @Override
   public String toString() {
-    return loginId;
+    return login;
   }
 
 }
