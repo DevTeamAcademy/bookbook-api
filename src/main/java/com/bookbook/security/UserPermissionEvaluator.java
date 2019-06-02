@@ -8,7 +8,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.io.Serializable;
 
 @Component
-//@Profile(NOT_TEST_PROFILE)
 public class UserPermissionEvaluator implements PermissionEvaluator {
 
   @Override
