@@ -15,6 +15,9 @@ spring:
       hikari:
         connection-timeout: 20000
         maximum-pool-size: 5
+  liquibase:
+    enabled: true
+    change-log: classpath:/database/db.changelog-master.xml
 
 security:
   oauth2:
