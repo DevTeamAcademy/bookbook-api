@@ -3,14 +3,32 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     
-    <!--<changeSet id="a_user" author="aploskiy">-->
-        <!--<createTable tableName="ACCOUNT">-->
-            <!--<column name="GUID" type="nvarchar(40)">-->
-                <!--<constraints nullable="false" primaryKeyName="ACCOUNT_PK" primaryKey="true"/>-->
-            <!--</column>-->
-        <!--</createTable>-->
-    <!--</changeSet>-->
+    <changeSet id="create_book_user" author="aploskiy">
+        <createTable tableName="book_user">
+            <column name="guid" type="nvarchar(40)">
+                <constraints nullable="false" primaryKeyName="ACCOUNT_PK" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            
+            <!--audit field-->
+            <column name="version" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(250)"/>
+            <column name="created_date" type="timestamp(3) with time zone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp(3) with time zone"/>
+        </createTable>
+    </changeSet>
 
-    
-   
+
 </databaseChangeLog>
