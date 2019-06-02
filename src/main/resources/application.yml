@@ -16,3 +16,13 @@ spring:
         connection-timeout: 20000
         maximum-pool-size: 5
 
+security:
+  oauth2:
+    jwt:
+      keypass: asDKW3yQ
+      keystore: amous
+      keyStorePath: s3://amous-secrets-store-prod/amous-prod.jks
+    resource:
+      jwt:
+        accessTokenValiditySeconds: 10800
+        refreshTokenValiditySeconds: 86400
