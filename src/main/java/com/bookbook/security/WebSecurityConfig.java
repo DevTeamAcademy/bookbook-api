@@ -41,10 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 //    String[] ignoredSwaggerUrls = applicationContext.getEnvironment().acceptsProfiles(DEVELOPMENT_PROFILE, LOCAL_PROFILE) ? SWAGGER_RESOURCES : new String[]{};
-    http.authorizeRequests()
+    http.csrf().disable().authorizeRequests()
 //        .antMatchers(ignoredSwaggerUrls).permitAll()
         .antMatchers(HttpMethod.GET, "/health").permitAll()
+        .antMatchers(HttpMethod.POST, "/user").permitAll()
 //        .antMatchers("/loggers", "/loggers/**").hasRole(LIUBANCHYK_ROLE)
-        .anyRequest().authenticated();
+        .anyRequest().permitAll();
   }
 }

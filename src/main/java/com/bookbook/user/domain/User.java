@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "BOOK_USER")
 public class User extends AuditedEntity {
 
   @Column(name = "login")

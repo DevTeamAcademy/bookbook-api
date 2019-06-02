@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -19,30 +18,24 @@ import java.util.Set;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   private static final String MIKHALITSYN = "MIKHALITSYN";
-  private Oauth2UserDetails userMikhalitsyn;
+  public static final String ROLE_USER = "ROLE_USER";
+  public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
   @Autowired
   private UserRepository userRepository;
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  @PostConstruct
-  public void init() {
-    HashSet<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
-    authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-    userMikhalitsyn = new Oauth2UserDetails(MIKHALITSYN, passwordEncoder.encode(MIKHALITSYN), true, authorities);
-  }
 
   @Override
   public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-    if (MIKHALITSYN.equals(loginId)) {
-      return userMikhalitsyn;
-    }
+
 
     Optional<User> user = userRepository.findOneByLogin(loginId);
     return user.map(u -> {
+      String role = MIKHALITSYN.equals(loginId) ? ROLE_ADMIN : ROLE_USER;
       Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-      authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+      authorities.add(new SimpleGrantedAuthority(role));
       return new Oauth2UserDetails(u.getLogin(), u.getPassword(), true, authorities);
     }).orElseThrow(() -> new UsernameNotFoundException("User not found :" + loginId));
   }

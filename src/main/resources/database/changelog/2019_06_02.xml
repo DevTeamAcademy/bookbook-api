@@ -11,7 +11,7 @@
             <column name="login" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="varchar(50)">
+            <column name="password" type="varchar(128)">
                 <constraints nullable="false"/>
             </column>
             
@@ -28,6 +28,17 @@
             </column>
             <column name="last_modified_date" type="timestamp(3) with time zone"/>
         </createTable>
+    </changeSet>
+    
+    <changeSet id="add_admin" author="aploskiy">
+        <insert tableName="book_user">
+            <column name="guid" value="c6d06535-8fc5-47c2-8d7a-797706e1d834"/>
+            <column name="login" value="MIKHALITSYN"/>
+            <column name="password" value="$2a$10$VhKYNy.BJjkyELffHNKtxeonUCOveuV3tO7wahL4nkEqbThQWMBNK"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="created_by" value="system"/>
+            <column name="created_date" valueDate="2019-06-02"/>
+        </insert>
     </changeSet>
 
 
