@@ -6,7 +6,7 @@
     <changeSet id="create_book_user" author="aploskiy">
         <createTable tableName="book_user">
             <column name="guid" type="nvarchar(40)">
-                <constraints nullable="false" primaryKeyName="book_user" primaryKey="true"/>
+                <constraints nullable="false" primaryKeyName="book_user_pk" primaryKey="true"/>
             </column>
             <column name="login" type="varchar(50)">
                 <constraints nullable="false"/>
