@@ -60,4 +60,8 @@ public class Oauth2UserDetails implements UserDetails {
     return login;
   }
 
+  public String getRole() {
+    return authorities.stream().findFirst().map(SimpleGrantedAuthority::getAuthority).orElseThrow(RuntimeException::new);
+  }
+
 }
