@@ -26,7 +26,7 @@ public class CreateUserValidator implements Validator {
           "User with email " + user.getEmail() + " already exists.");
     }
     if (userService.existsByLogin(user.getLogin())) {
-      errors.rejectValue("loginId", "validation.user.loginId.nonUnique", new String[]{user.getLogin()},
+      errors.rejectValue("login", "validation.user.loginId.nonUnique", new String[]{user.getLogin()},
           "User with login " + user.getLogin() + " already exists.");
     }
   }
