@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.util.Arrays;
 
@@ -43,14 +43,8 @@ public class JWTConfig {
   public JwtAccessTokenConverter accessTokenConverter() {
     JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
     jwtAccessTokenConverter.setAccessTokenConverter(defaultAccessTokenConverter());
-//    StorageObject jwtKeyObject = storageService.download(keyStorePath, true);
-//    InputStreamResource inputStreamResource = new InputStreamResource(jwtKeyObject.getObjectContent());
-//    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(inputStreamResource, keypass.toCharArray());
-//    jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair(keystore));
-
-    jwtAccessTokenConverter.setSigningKey("123");
-//    jwtAccessTokenConverter.setVerifierKey(privateKey);
-
+    KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource(keyStorePath), keypass.toCharArray());
+    jwtAccessTokenConverter.setKeyPair(keyStoreKeyFactory.getKeyPair(keystore));
     return jwtAccessTokenConverter;
   }
 
@@ -80,18 +74,12 @@ public class JWTConfig {
   public TokenEnhancerChain tokenEnhancerChain() {
     TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
     tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter()));
-
     return tokenEnhancerChain;
   }
 
   @Bean
   public TokenEnhancer tokenEnhancer() {
     return new JWTTokenEnhancer();
-  }
-
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
   }
 
 }

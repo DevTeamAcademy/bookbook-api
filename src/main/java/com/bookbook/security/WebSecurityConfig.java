@@ -7,12 +7,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
@@ -38,14 +39,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     return super.authenticationManagerBean();
   }
 
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Override
+  @Autowired
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+  }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-//    String[] ignoredSwaggerUrls = applicationContext.getEnvironment().acceptsProfiles(DEVELOPMENT_PROFILE, LOCAL_PROFILE) ? SWAGGER_RESOURCES : new String[]{};
-    http.csrf().disable().authorizeRequests()
-//        .antMatchers(ignoredSwaggerUrls).permitAll()
-        .antMatchers(HttpMethod.GET, "/health").permitAll()
-        .antMatchers(HttpMethod.POST, "/user").permitAll()
-//        .antMatchers("/loggers", "/loggers/**").hasRole(LIUBANCHYK_ROLE)
-        .anyRequest().permitAll();
+    http.authorizeRequests().anyRequest().authenticated().and().sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.NEVER);
   }
+
+//  @Override
+//  public void configure(WebSecurity web) throws Exception {
+//    web.ignoring();
+//  }
+
+
 }

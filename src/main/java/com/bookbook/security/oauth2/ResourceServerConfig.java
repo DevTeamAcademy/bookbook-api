@@ -1,9 +1,13 @@
 package com.bookbook.security.oauth2;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
+@Configuration
+@EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 //  @Autowired
@@ -22,11 +26,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   @Override
   public void configure(HttpSecurity http) throws Exception {
 //    String[] ignoredSwaggerUrls = applicationContext.getEnvironment().acceptsProfiles(Profiles.of(DEVELOPMENT_PROFILE, LOCAL_PROFILE)) ? SWAGGER_RESOURCES : new String[]{};
-    http.csrf().disable().cors().and().authorizeRequests()
+    http.cors().and().authorizeRequests()
 //        .antMatchers(ignoredSwaggerUrls).permitAll()
         .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
         .antMatchers(HttpMethod.GET, "/websocket", "/websocket/**").permitAll()
-        .antMatchers(HttpMethod.POST, "/user").permitAll()
-        .anyRequest().permitAll();
+        .anyRequest().authenticated();
   }
 }

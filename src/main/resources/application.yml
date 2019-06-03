@@ -22,9 +22,9 @@ spring:
 security:
   oauth2:
     jwt:
-      keypass: asDKW3yQ
-      keystore: amous
-      keyStorePath: s3://amous-secrets-store-prod/amous-prod.jks
+      keypass: ahLedF
+      keystore: bookbook
+      keyStorePath: keypair/bookbook.jks
     resource:
       jwt:
         accessTokenValiditySeconds: 10800
