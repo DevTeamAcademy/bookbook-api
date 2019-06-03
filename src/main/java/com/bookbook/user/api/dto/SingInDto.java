@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 
 public class SingInDto {
-
   @NotBlank
   @Length(min = 4, max = 255)
   private String login;
