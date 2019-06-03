@@ -1,7 +1,7 @@
 package com.bookbook.user.service;
 
 import com.bookbook.general.service.AbstractPersistenceService;
-import com.bookbook.user.api.dto.SingIn;
+import com.bookbook.user.api.dto.SingInDto;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +29,22 @@ public class UserService extends AbstractPersistenceService<User> {
   }
 
   @Transactional
-  public void singIn(SingIn singIn) {
+  public void singIn(SingInDto singInDto) {
     User user = new User();
-    user.setLogin(singIn.getLogin());
-    user.setPassword(passwordEncoder.encode(singIn.getPassword()));
+    user.setLogin(singInDto.getLogin());
+    user.setPassword(passwordEncoder.encode(singInDto.getPassword()));
     create(user);
   }
 
+  public boolean existsByEmail(String email) {
+    return repository.existsByEmail(email);
+  }
+
+  public boolean existsByLogin(String login) {
+    return repository.existsByLogin(login);
+  }
+
+  public User getByLogin(String login) {
+    return repository.findOneByLogin(login).get();
+  }
 }

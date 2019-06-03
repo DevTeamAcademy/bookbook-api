@@ -23,6 +23,7 @@
         <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
         <org.liquibase.version>3.6.3</org.liquibase.version>
         <guava.version>23.0</guava.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
     
     <dependencies>
@@ -81,6 +82,16 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
 

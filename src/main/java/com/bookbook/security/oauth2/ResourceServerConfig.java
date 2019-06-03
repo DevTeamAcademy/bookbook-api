@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
+import static com.bookbook.config.SwaggerConfig.SWAGGER_RESOURCES;
+
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
@@ -27,7 +29,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
   public void configure(HttpSecurity http) throws Exception {
 //    String[] ignoredSwaggerUrls = applicationContext.getEnvironment().acceptsProfiles(Profiles.of(DEVELOPMENT_PROFILE, LOCAL_PROFILE)) ? SWAGGER_RESOURCES : new String[]{};
     http.cors().and().authorizeRequests()
-//        .antMatchers(ignoredSwaggerUrls).permitAll()
+        .antMatchers(SWAGGER_RESOURCES).permitAll()
         .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
         .antMatchers(HttpMethod.GET, "/websocket", "/websocket/**").permitAll()
         .anyRequest().authenticated();

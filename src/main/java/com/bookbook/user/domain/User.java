@@ -14,6 +14,8 @@ public class User extends AuditedEntity {
   private String login;
   @Column(name = "password")
   private String password;
+  @Column(name = "email")
+  private String email;
 
   public String getPassword() {
     return password;
