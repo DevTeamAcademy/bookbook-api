@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -17,13 +19,13 @@ public class UserController {
   @Autowired
   private CreateUserValidator createUserValidator;
 
-  @InitBinder("createUserDto")
+  @InitBinder("singInDto")
   public void initBinder(WebDataBinder binder) {
     binder.addValidators(createUserValidator);
   }
 
   @PostMapping
-  public void singIn(@RequestBody SingInDto singInDto) {
+  public void singIn(@RequestBody @Valid SingInDto singInDto) {
     userService.singIn(singInDto);
   }
 

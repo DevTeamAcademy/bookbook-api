@@ -42,6 +42,8 @@
             <column name="version" valueNumeric="0"/>
             <column name="created_by" value="system"/>
             <column name="created_date" valueDate="2019-06-02"/>
+            <column name="last_modified_by" value="system"/>
+            <column name="last_modified_date" valueDate="2019-06-02"/>
         </insert>
     </changeSet>
 

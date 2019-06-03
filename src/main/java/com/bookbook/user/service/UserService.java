@@ -33,7 +33,8 @@ public class UserService extends AbstractPersistenceService<User> {
     User user = new User();
     user.setLogin(singInDto.getLogin());
     user.setPassword(passwordEncoder.encode(singInDto.getPassword()));
-    create(user);
+    user.setEmail(singInDto.getEmail());
+    super.create(user);
   }
 
   public boolean existsByEmail(String email) {
