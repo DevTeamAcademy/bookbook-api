@@ -1,6 +1,8 @@
 package com.bookbook.user.service;
 
 import com.bookbook.general.service.AbstractPersistenceService;
+import com.bookbook.mail.dto.Mail;
+import com.bookbook.mail.service.MailService;
 import com.bookbook.user.api.dto.SingInDto;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.repository.UserRepository;
@@ -18,6 +20,8 @@ public class UserService extends AbstractPersistenceService<User> {
   private UserRepository repository;
   @Autowired
   private PasswordEncoder passwordEncoder;
+  @Autowired
+  private MailService mailService;
 
   public UserService() {
     super(User.class);
@@ -30,6 +34,12 @@ public class UserService extends AbstractPersistenceService<User> {
 
   @Transactional
   public void singIn(SingInDto singInDto) {
+    Mail mail = new Mail()
+        .setFrom("book.book.dev@gmail.com")
+        .setTo("ploskiy.andriy@gmail.com")
+        .setText("fdsfsdfasdfdsaa");
+    mailService.sendMail(mail);
+
     User user = new User();
     user.setLogin(singInDto.getLogin());
     user.setPassword(passwordEncoder.encode(singInDto.getPassword()));
@@ -46,6 +56,6 @@ public class UserService extends AbstractPersistenceService<User> {
   }
 
   public User getByLogin(String login) {
-    return repository.findOneByLogin(login).get();
+    return repository.findOneByLogin(login).orElse(null);
   }
 }

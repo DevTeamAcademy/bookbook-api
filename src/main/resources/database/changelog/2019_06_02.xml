@@ -33,6 +33,20 @@
         </createTable>
     </changeSet>
     
+    <changeSet id="add_unique_constrains" author="aploskiy">
+        <addUniqueConstraint tableName="book_user" columnNames="login"/>
+        <addUniqueConstraint tableName="book_user" columnNames="email"/>
+    </changeSet>
+    
+    <changeSet id="add_indexes" author="aploskiy">
+        <createIndex tableName="book_user" indexName="book_user_login">
+            <column name="login"/>
+        </createIndex>
+        <createIndex tableName="book_user" indexName="book_user_email">
+            <column name="email"/>
+        </createIndex>
+    </changeSet>
+    
     <changeSet id="add_admin" author="aploskiy">
         <insert tableName="book_user">
             <column name="guid" value="c6d06535-8fc5-47c2-8d7a-797706e1d834"/>
@@ -46,6 +60,5 @@
             <column name="last_modified_date" valueDate="2019-06-02"/>
         </insert>
     </changeSet>
-
 
 </databaseChangeLog>

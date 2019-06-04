@@ -8,6 +8,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
   datasource:
       url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
@@ -15,9 +16,21 @@ spring:
       hikari:
         connection-timeout: 20000
         maximum-pool-size: 5
+
   liquibase:
     enabled: true
     change-log: classpath:/database/db.changelog-master.xml
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: book.book.dev@gmail.com
+    password: bookbook123
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
 
 security:
   oauth2:
@@ -29,6 +42,10 @@ security:
       jwt:
         accessTokenValiditySeconds: 10800
         refreshTokenValiditySeconds: 86400
+
+
+mail:
+  maxSize: 25MB
 
 logging:
   pattern.console: '%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
