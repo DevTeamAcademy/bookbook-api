@@ -58,6 +58,7 @@ public class UserService extends AbstractPersistenceService<User> {
     Mail mail = new Mail()
         .setFrom(fromMail)
         .setTo(createUserDto.getEmail())
+        .setSubject("New BookBook user: " + createUserDto.getLogin())
         .setText(mailVerifyUrl);
 
     mailService.sendMail(mail);
