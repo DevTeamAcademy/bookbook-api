@@ -1,6 +1,6 @@
 package com.bookbook.user.api.validation;
 
-import com.bookbook.user.api.dto.SingInDto;
+import com.bookbook.user.api.dto.CreateUserDto;
 import com.bookbook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,12 +15,12 @@ public class CreateUserValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> aClass) {
-    return SingInDto.class.equals(aClass);
+    return CreateUserDto.class.equals(aClass);
   }
 
   @Override
   public void validate(Object object, Errors errors) {
-    SingInDto user = (SingInDto) object;
+    CreateUserDto user = (CreateUserDto) object;
     if (userService.existsByEmail(user.getEmail())) {
       errors.rejectValue("email", "validation.user.email.nonUnique", new String[]{user.getEmail()},
           "User with email " + user.getEmail() + " already exists.");

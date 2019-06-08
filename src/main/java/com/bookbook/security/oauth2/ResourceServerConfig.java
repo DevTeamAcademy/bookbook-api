@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
-import static com.bookbook.config.SwaggerConfig.SWAGGER_RESOURCES;
+import static com.bookbook.general.config.SwaggerConfig.SWAGGER_RESOURCES;
 
 @Configuration
 @EnableResourceServer
@@ -32,6 +32,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers(SWAGGER_RESOURCES).permitAll()
         .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
         .antMatchers(HttpMethod.GET, "/websocket", "/websocket/**").permitAll()
+        //-----USER----
+        .antMatchers(HttpMethod.POST, "/user/signUp").permitAll()
+        .antMatchers(HttpMethod.GET, "/user/new/*").permitAll()
         .anyRequest().authenticated();
   }
 }

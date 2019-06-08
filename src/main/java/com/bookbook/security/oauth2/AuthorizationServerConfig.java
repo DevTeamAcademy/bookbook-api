@@ -13,14 +13,16 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
+import java.time.Duration;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-  @Value("${security.oauth2.resource.jwt.accessTokenValiditySeconds}")
-  private int accessTokenValiditySeconds;
-  @Value("${security.oauth2.resource.jwt.refreshTokenValiditySeconds}")
-  private int refreshTokenValiditySeconds;
+  @Value("${security.oauth2.resource.jwt.accessTokenValidity}")
+  private Duration accessTokenValidity;
+  @Value("${security.oauth2.resource.jwt.refreshTokenValidity}")
+  private Duration refreshTokenValidity;
 
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
@@ -44,8 +46,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         .secret("$2a$10$E5JyVIXFBT2aXw/jA/Wvf.S8ERfQiU0Rvu1tcPRXJVigPt/ubZ5tm")
         .authorizedGrantTypes("password", "refresh_token")
         .scopes("read", "write")
-        .accessTokenValiditySeconds(accessTokenValiditySeconds)
-        .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
+        .accessTokenValiditySeconds((int) accessTokenValidity.getSeconds())
+        .refreshTokenValiditySeconds((int) refreshTokenValidity.getSeconds());
   }
 
   @Override

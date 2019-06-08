@@ -40,12 +40,20 @@ security:
       keyStorePath: keypair/bookbook.jks
     resource:
       jwt:
-        accessTokenValiditySeconds: 10800
-        refreshTokenValiditySeconds: 86400
+        accessTokenValidity: 3h
+        refreshTokenValidity: 24h
 
 
 mail:
+  from: book.book.dev@gmail.com
   maxSize: 25MB
+
+user:
+  signUp:
+    expiration: 1h
+
+url:
+  frontEnd: http://localhost:8080
 
 logging:
   pattern.console: '%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}'
