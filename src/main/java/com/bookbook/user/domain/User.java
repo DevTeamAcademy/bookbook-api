@@ -10,11 +10,11 @@ import javax.persistence.Table;
 @Table(name = "BOOK_USER")
 public class User extends AuditedEntity {
 
-  @Column(name = "login")
+  @Column(name = "LOGIN")
   private String login;
-  @Column(name = "password")
+  @Column(name = "PASSWORD")
   private String password;
-  @Column(name = "email")
+  @Column(name = "EMAIL")
   private String email;
 
   public String getPassword() {

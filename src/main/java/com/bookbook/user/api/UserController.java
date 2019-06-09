@@ -1,7 +1,7 @@
 package com.bookbook.user.api;
 
-import com.bookbook.user.api.dto.CreateUserDto;
 import com.bookbook.user.api.validation.CreateUserValidator;
+import com.bookbook.user.domain.NewUser;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,21 +20,27 @@ public class UserController {
   @Autowired
   private CreateUserValidator createUserValidator;
 
-  @InitBinder("createUserDto")
+  @InitBinder("newUser")
   public void initBinder(WebDataBinder binder) {
     binder.addValidators(createUserValidator);
   }
 
   @PostMapping("/signUp")
-  public void signUp(@RequestBody @Valid CreateUserDto createUserDto) {
-    userService.signUp(createUserDto);
+  public void signUp(@RequestBody @Valid NewUser newUser) {
+    userService.signUp(newUser);
   }
 
-  @GetMapping(value = "/new/{token}")
-  public ResponseEntity create(@PathVariable String token) {
+  @GetMapping(value = "/new", params = "token")
+  public ResponseEntity create(@RequestParam String token) {
     String html = userService.create(token);
     return ResponseEntity.ok(html);
   }
+
+  @PostMapping("/forgot")
+  public void forgotPassword(@RequestParam("loginOrEmaill") String loginOrEmail ){
+    userService.forgotPassword(loginOrEmail);
+  }
+
 
   @GetMapping(params = "login")
   public User getUser(@RequestParam String login) {

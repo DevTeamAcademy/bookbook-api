@@ -74,7 +74,7 @@ public class MailServiceImp implements MailService {
         helper.addAttachment(Objects.requireNonNull(attFile.getOriginalFilename()), attFile);
       }
     } catch (AddressException e) {
-//      throw new AmousValidationException("validation.email.notParsable", new String[]{e.getRef(), e.getLocalizedMessage()}, "Invalid Email Address");
+//      throw new ValidationException("validation.email.notParsable", new String[]{e.getRef(), e.getLocalizedMessage()}, "Invalid Email Address");
     } catch (MessagingException e) {
       throw new RuntimeException("Error while sending mail", e);
     }

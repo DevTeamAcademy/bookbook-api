@@ -43,14 +43,15 @@ security:
         accessTokenValidity: 3h
         refreshTokenValidity: 24h
 
-
 mail:
   from: book.book.dev@gmail.com
   maxSize: 25MB
 
 user:
-  signUp:
-    expiration: 1h
+  resetPasswordExpiration: 24h
+  signUpExpiration: 24h
+  purge:
+    cron: 0 0 23 * * *
 
 url:
   frontEnd: http://localhost:8080

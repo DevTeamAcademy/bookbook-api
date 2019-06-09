@@ -1,6 +1,6 @@
 package com.bookbook.user.api.validation;
 
-import com.bookbook.user.api.dto.CreateUserDto;
+import com.bookbook.user.domain.NewUser;
 import com.bookbook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,19 +15,19 @@ public class CreateUserValidator implements Validator {
 
   @Override
   public boolean supports(Class<?> aClass) {
-    return CreateUserDto.class.equals(aClass);
+    return NewUser.class.equals(aClass);
   }
 
   @Override
   public void validate(Object object, Errors errors) {
-    CreateUserDto user = (CreateUserDto) object;
-    if (userService.existsByEmail(user.getEmail())) {
-      errors.rejectValue("email", "validation.user.email.nonUnique", new String[]{user.getEmail()},
-          "User with email " + user.getEmail() + " already exists.");
+    NewUser newUser = (NewUser) object;
+    if (userService.existsByEmail(newUser.getEmail())) {
+      errors.rejectValue("email", "validation.newUser.email.nonUnique", new String[]{newUser.getEmail()},
+          "User with email " + newUser.getEmail() + " already exists.");
     }
-    if (userService.existsByLogin(user.getLogin())) {
-      errors.rejectValue("login", "validation.user.loginId.nonUnique", new String[]{user.getLogin()},
-          "User with login " + user.getLogin() + " already exists.");
+    if (userService.existsByLogin(newUser.getLogin())) {
+      errors.rejectValue("login", "validation.newUser.loginId.nonUnique", new String[]{newUser.getLogin()},
+          "User with login " + newUser.getLogin() + " already exists.");
     }
   }
 
