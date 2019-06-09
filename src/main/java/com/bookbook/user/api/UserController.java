@@ -6,7 +6,6 @@ import com.bookbook.user.domain.User;
 import com.bookbook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +31,6 @@ public class UserController {
   }
 
   @GetMapping(value = "/new/{token}")
-  @PreAuthorize("@userCache.getIfPresent(#token) != null")
   public ResponseEntity create(@PathVariable String token) {
     String html = userService.create(token);
     return ResponseEntity.ok(html);
