@@ -34,7 +34,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/websocket", "/websocket/**").permitAll()
         //-----USER----
         .antMatchers(HttpMethod.POST, "/user/signUp", "/user/forgot").permitAll()
-        .antMatchers(HttpMethod.GET, "/user/new/*").permitAll()
+        .antMatchers(HttpMethod.GET, "/user/new").permitAll()
 
         .anyRequest().authenticated();
   }

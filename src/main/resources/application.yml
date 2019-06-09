@@ -49,7 +49,7 @@ mail:
 
 user:
   resetPasswordExpiration: 24h
-  signUpEexpiration: 24h
+  signUpExpiration: 24h
   purge:
     cron: 0 0 23 * * *
 

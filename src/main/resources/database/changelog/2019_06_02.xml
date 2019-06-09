@@ -59,5 +59,42 @@
             <column name="last_modified_date" valueDate="2019-06-02"/>
         </insert>
     </changeSet>
+    
+    <changeSet id="create_user_new" author="aploskiy">
+        <createTable tableName="user_new">
+            <column name="guid" type="nvarchar(40)">
+                <constraints nullable="false" primaryKeyName="user_new_pk" primaryKey="true"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="create_user_password_reset" author="aploskiy">
+        <createTable tableName="user_password_reset">
+            <column name="guid" type="nvarchar(40)">
+                <constraints nullable="false" primaryKeyName="user_password_reset_pk" primaryKey="true"/>
+            </column>
+            <column name="user_guid" type="nvarchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_token" type="nvarchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

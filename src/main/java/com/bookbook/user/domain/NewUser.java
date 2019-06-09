@@ -15,14 +15,17 @@ import java.time.LocalDateTime;
 public class NewUser extends BaseEntity {
   @NotBlank
   @Length(min = 4, max = 255)
+  @Column(name = "LOGIN")
   private String login;
   @NotBlank
   @Length(min = 4, max = 255)
+  @Column(name = "PASSWORD")
   private String password;
   @NotBlank
+  @Column(name = "EMAIL")
   private String email;
   @JsonIgnore
-  @Column(name = "EXPIRATION_DATE")
+  @Column(name = "EXPIRATION_DATE_TIME")
   private LocalDateTime expiration;
 
   public String getLogin() {
