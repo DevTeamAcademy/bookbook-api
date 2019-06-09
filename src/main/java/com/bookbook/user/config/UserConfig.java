@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class UserConfig {
 
-  @Value("${user.signUp.expiration}")
+  @Value("${user.signUpExpiration}")
   private Duration signUpExpiration;
 
   @Bean

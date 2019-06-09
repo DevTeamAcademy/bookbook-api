@@ -24,14 +24,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-    Optional<User> user = userRepository.findOneByLogin(loginId);
+  public UserDetails loadUserByUsername(String loginOrEmail) throws UsernameNotFoundException {
+    Optional<User> user = userRepository.findOneByLoginOrEmail(loginOrEmail, loginOrEmail);
     return user.map(u -> {
-      String role = MIKHALITSYN.equals(loginId) ? ROLE_ADMIN : ROLE_USER;
+      String role = MIKHALITSYN.equals(u.getLogin()) ? ROLE_ADMIN : ROLE_USER;
       Set<SimpleGrantedAuthority> authorities = new HashSet<>();
       authorities.add(new SimpleGrantedAuthority(role));
       return new Oauth2UserDetails(u.getLogin(), u.getPassword(), true, authorities);
-    }).orElseThrow(() -> new UsernameNotFoundException("User not found :" + loginId));
+    }).orElseThrow(() -> new UsernameNotFoundException("User not found :" + loginOrEmail));
   }
 
 }

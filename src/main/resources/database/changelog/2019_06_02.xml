@@ -34,15 +34,14 @@
     </changeSet>
     
     <changeSet id="add_unique_constrains" author="aploskiy">
-        <addUniqueConstraint tableName="book_user" columnNames="login"/>
-        <addUniqueConstraint tableName="book_user" columnNames="email"/>
+        <addUniqueConstraint tableName="book_user" columnNames="login, email" constraintName="user_unique_log_crn"/>
     </changeSet>
     
     <changeSet id="add_indexes" author="aploskiy">
-        <createIndex tableName="book_user" indexName="book_user_login">
+        <createIndex tableName="book_user" indexName="book_user_login_idx">
             <column name="login"/>
         </createIndex>
-        <createIndex tableName="book_user" indexName="book_user_email">
+        <createIndex tableName="book_user" indexName="book_user_email_idx">
             <column name="email"/>
         </createIndex>
     </changeSet>
