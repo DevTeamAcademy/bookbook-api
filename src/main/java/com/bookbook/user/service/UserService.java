@@ -3,11 +3,13 @@ package com.bookbook.user.service;
 import com.bookbook.general.service.AbstractPersistenceService;
 import com.bookbook.mail.dto.Mail;
 import com.bookbook.mail.service.MailService;
+import com.bookbook.template.constant.Templates;
 import com.bookbook.template.service.TemplateService;
 import com.bookbook.user.api.dto.CreateUserDto;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.repository.UserRepository;
 import com.google.common.cache.Cache;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Service
@@ -51,15 +54,15 @@ public class UserService extends AbstractPersistenceService<User> {
     String token = UUID.randomUUID().toString();
     String mailVerifyUrl = String.join("/", fontEndUrl, token);
 
-//    HashMap<String, Object> data = Maps.newHashMap();
-//    data.put("mailVerifyUrl", mailVerifyUrl);
-//    String html = templateService.build(Templates.SING_UP, data);
+    HashMap<String, Object> data = Maps.newHashMap();
+    data.put("mailVerifyUrl", mailVerifyUrl);
+    String html = templateService.build(Templates.SING_UP, data);
 
     Mail mail = new Mail()
         .setFrom(fromMail)
         .setTo(createUserDto.getEmail())
         .setSubject("New BookBook user: " + createUserDto.getLogin())
-        .setText(mailVerifyUrl);
+        .setHtml(html);
 
     mailService.sendMail(mail);
     userCache.put(token, createUserDto);
