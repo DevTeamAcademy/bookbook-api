@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -56,7 +57,7 @@ public class UserService extends AbstractPersistenceService<User> {
 
     HashMap<String, Object> data = Maps.newHashMap();
     data.put("mailVerifyUrl", mailVerifyUrl);
-    String html = templateService.build(Templates.SING_UP, data);
+    String html = templateService.build(Templates.USER_SING_UP, data);
 
     Mail mail = new Mail()
         .setFrom(fromMail)
@@ -68,14 +69,25 @@ public class UserService extends AbstractPersistenceService<User> {
     userCache.put(token, createUserDto);
   }
 
-  public void create(String token) {
+  public String create(String token) {
     CreateUserDto createUserDto = userCache.getIfPresent(token);
+
+    if (Objects.isNull(createUserDto)) {
+      HashMap<String, Object> data = Maps.newHashMap();
+      data.put("errorMsg", "expired");
+      return templateService.build(Templates.USER_EXPIRE, data);
+    }
+
     User user = new User();
     user.setLogin(createUserDto.getLogin());
     user.setPassword(passwordEncoder.encode(createUserDto.getPassword()));
     user.setEmail(createUserDto.getEmail());
     super.create(user);
     userCache.invalidate(token);
+
+    HashMap<String, Object> data = Maps.newHashMap();
+    data.put("resultMsg", "User was created");
+    return templateService.build(Templates.USER_CREATE, data);
   }
 
   public boolean existsByEmail(String email) {
