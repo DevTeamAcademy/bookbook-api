@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
   @ResponseStatus(BAD_REQUEST)
   @ResponseBody
   @ExceptionHandler(ValidationException.class)
-  public ErrorResponse amousValidationExceptionHandler(ValidationException e) {
+  public ErrorResponse validationExceptionHandler(ValidationException e) {
     LOGGER.info(messageSource.getMessage(e.getErrorMessage(), Locale.getDefault()));
     return new ErrorResponse(messageSource.getMessage(e.getErrorMessage(), Locale.getDefault()));
   }
