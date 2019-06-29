@@ -10,13 +10,13 @@ import java.util.Set;
 public class Oauth2UserDetails implements UserDetails {
   private final String login;
   private final String password;
-  private final boolean enabled;
+  private final String userGuid;
   private final Set<SimpleGrantedAuthority> authorities;
 
-  public Oauth2UserDetails(String login, String password, boolean enabled, Set<SimpleGrantedAuthority> authorities) {
+  public Oauth2UserDetails(String login, String password, String userGuid, Set<SimpleGrantedAuthority> authorities) {
     this.login = login;
     this.password = password;
-    this.enabled = enabled;
+    this.userGuid = userGuid;
     this.authorities = authorities;
   }
 
@@ -52,7 +52,7 @@ public class Oauth2UserDetails implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return enabled;
+    return true;
   }
 
   @Override
@@ -64,4 +64,7 @@ public class Oauth2UserDetails implements UserDetails {
     return authorities.stream().findFirst().map(SimpleGrantedAuthority::getAuthority).orElseThrow(RuntimeException::new);
   }
 
+  public String getUserGuid() {
+    return userGuid;
+  }
 }

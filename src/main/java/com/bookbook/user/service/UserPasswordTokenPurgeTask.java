@@ -9,10 +9,13 @@ public class UserPasswordTokenPurgeTask {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private PasswordService passwordService;
 
   @Scheduled(cron = "${user.purge.cron}")
   public void purgeExpired() {
     userService.deleteAllExpiration();
+    passwordService.deleteAllExpiration();
   }
 
 }

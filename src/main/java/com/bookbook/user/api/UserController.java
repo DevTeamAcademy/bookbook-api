@@ -2,12 +2,13 @@ package com.bookbook.user.api;
 
 import com.bookbook.user.api.validation.CreateUserValidator;
 import com.bookbook.user.domain.NewUser;
-import com.bookbook.user.domain.User;
+import com.bookbook.user.service.PasswordService;
 import com.bookbook.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 
@@ -17,6 +18,8 @@ public class UserController {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private PasswordService passwordService;
   @Autowired
   private CreateUserValidator createUserValidator;
 
@@ -36,15 +39,25 @@ public class UserController {
     return ResponseEntity.ok(html);
   }
 
-  @PostMapping("/forgot")
-  public void forgotPassword(@RequestParam("loginOrEmaill") String loginOrEmail ){
-    userService.forgotPassword(loginOrEmail);
+  @PutMapping("/updatePassword")
+  public void updatePassword(String newPassword) {
+    userService.changePassword(newPassword);
   }
 
+  @PostMapping("/forgot")
+  public void forgotPassword(@RequestParam String loginOrEmail) {
+    passwordService.forgotPassword(loginOrEmail);
+  }
 
-  @GetMapping(params = "login")
-  public User getUser(@RequestParam String login) {
-    return userService.getByLogin(login);
+  @GetMapping("/changePassword")
+  public RedirectView changePassword(String token) {
+    String url = passwordService.changePassword(token);
+    return new RedirectView(url);
+  }
+
+  @PutMapping("/updatePasswordFromForgot")
+  public void changePasswordFromForgot(String newPassword) {
+    userService.changePassword(newPassword);
   }
 
 }

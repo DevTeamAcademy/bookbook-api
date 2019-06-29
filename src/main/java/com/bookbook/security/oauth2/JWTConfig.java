@@ -50,7 +50,7 @@ public class JWTConfig {
 
   @Primary
   @Bean
-  public AuthorizationServerTokenServices defaultTokenServices() {
+  public DefaultTokenServices defaultTokenServices() {
     DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
     defaultTokenServices.setTokenStore(tokenStore());
     defaultTokenServices.setClientDetailsService(clientDetailsService);

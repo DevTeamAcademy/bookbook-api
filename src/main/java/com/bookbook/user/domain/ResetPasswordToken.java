@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "USER_PASSWORD_RESET")
-public class PasswordResetToken extends BaseEntity {
+public class ResetPasswordToken extends BaseEntity {
   @Column(name = "USER_GUID")
   private String userGuid;
   @Column(name = "TOKEN")

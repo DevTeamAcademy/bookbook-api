@@ -2,18 +2,13 @@ package com.bookbook.security.service;
 
 public class CustomTokenDetails {
   private final String userGuid;
-  private final String enterpriseGuid;
 
-  public CustomTokenDetails(String userGuid, String enterpriseGuid) {
+  public CustomTokenDetails(String userGuid) {
     this.userGuid = userGuid;
-    this.enterpriseGuid = enterpriseGuid;
   }
 
   public String getUserGuid() {
     return userGuid;
   }
 
-  public String getEnterpriseGuid() {
-    return enterpriseGuid;
-  }
 }

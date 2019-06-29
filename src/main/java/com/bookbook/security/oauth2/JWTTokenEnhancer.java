@@ -1,5 +1,6 @@
 package com.bookbook.security.oauth2;
 
+import com.bookbook.security.service.CustomTokenDetails;
 import com.bookbook.security.service.Oauth2UserDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.bookbook.security.constant.TokenKeys.ROLE;
+import static com.bookbook.security.constant.TokenKeys.USER_GUID;
+
 @Component
 public class JWTTokenEnhancer implements TokenEnhancer {
   @Override
@@ -18,15 +22,14 @@ public class JWTTokenEnhancer implements TokenEnhancer {
     Object principal = authentication.getPrincipal();
 
     Map<String, Object> additionalInfo = new HashMap<>();
-//    if (principal instanceof Oauth2UserDetails) {
-    Oauth2UserDetails oauth2UserDetails = (Oauth2UserDetails) principal;
-    additionalInfo.put("role", ((Oauth2UserDetails) principal).getRole());
-//    }
-// else {
-//      CustomTokenDetails details = (CustomTokenDetails) authentication.getDetails();
-//      additionalInfo.put(USER_GUID, details.getUserGuid());
-//      additionalInfo.put(ENTERPRISE_GUID, details.getEnterpriseGuid());
-//    }
+    if (principal instanceof Oauth2UserDetails) {
+      Oauth2UserDetails oauth2UserDetails = (Oauth2UserDetails) principal;
+      additionalInfo.put(ROLE, oauth2UserDetails.getRole());
+      additionalInfo.put(USER_GUID, oauth2UserDetails.getUserGuid());
+    } else {
+      CustomTokenDetails details = (CustomTokenDetails) authentication.getDetails();
+      additionalInfo.put(USER_GUID, details.getUserGuid());
+    }
     ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
     return accessToken;
   }
