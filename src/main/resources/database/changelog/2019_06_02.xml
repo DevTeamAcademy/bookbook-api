@@ -3,10 +3,10 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     
-    <changeSet id="create_book_user" author="aploskiy">
-        <createTable tableName="book_user">
+    <changeSet id="create_user_profile" author="aploskiy">
+        <createTable tableName="user_profile">
             <column name="guid" type="nvarchar(40)">
-                <constraints nullable="false" primaryKeyName="book_user_pk" primaryKey="true"/>
+                <constraints nullable="false" primaryKeyName="user_profile_pk" primaryKey="true"/>
             </column>
             <column name="login" type="varchar(50)">
                 <constraints nullable="false"/>
@@ -34,20 +34,20 @@
     </changeSet>
     
     <changeSet id="add_unique_constrains" author="aploskiy">
-        <addUniqueConstraint tableName="book_user" columnNames="login, email" constraintName="user_unique_log_crn"/>
+        <addUniqueConstraint tableName="user_profile" columnNames="login, email" constraintName="user_unique_log_mail_crn"/>
     </changeSet>
     
     <changeSet id="add_indexes" author="aploskiy">
-        <createIndex tableName="book_user" indexName="book_user_login_idx">
+        <createIndex tableName="user_profile" indexName="user_profile_login_idx">
             <column name="login"/>
         </createIndex>
-        <createIndex tableName="book_user" indexName="book_user_email_idx">
+        <createIndex tableName="user_profile" indexName="user_profile_email_idx">
             <column name="email"/>
         </createIndex>
     </changeSet>
     
     <changeSet id="add_admin" author="aploskiy">
-        <insert tableName="book_user">
+        <insert tableName="user_profile">
             <column name="guid" value="c6d06535-8fc5-47c2-8d7a-797706e1d834"/>
             <column name="login" value="MIKHALITSYN"/>
             <column name="password" value="$2a$10$VhKYNy.BJjkyELffHNKtxeonUCOveuV3tO7wahL4nkEqbThQWMBNK"/>
