@@ -49,7 +49,7 @@ public class MailServiceImp implements MailService {
   }
 
   private MimeMessage convertToMimeMessage(Mail mail) {
-    MimeMessage message = new MimeMessage(Session.getDefaultInstance(new Properties()));
+    MimeMessage message = new MimeMessage(Session.getInstance(new Properties()));
 
     try {
       MimeMessageHelper helper = new MimeMessageHelper(message, true);
