@@ -52,14 +52,12 @@ public class PasswordService {
 
   @Transactional
   public void forgot(String loginOrEmail) {
-    Optional<User> userOptional = userService.findOneByLoginOrEmail(loginOrEmail);
-    if (!userOptional.isPresent()) {
-      throw new ValidationException("validation.user.password.reset", "Invalid login or email");
-    }
+    User user = userService.findOneByLoginOrEmail(loginOrEmail)
+        .orElseThrow(() -> new ValidationException("validation.user.password.reset", "Invalid login or email"));
 
-    User user = userOptional.get();
     String token = UUID.randomUUID().toString();
 
+    passwordResetRepository.deleteByUserGuid(user.getGuid());
     PasswordResetToken passwordResetToken = new PasswordResetToken();
     passwordResetToken.setToken(token);
     passwordResetToken.setUserGuid(user.getGuid());
@@ -72,7 +70,7 @@ public class PasswordService {
         .build().toUriString();
 
     Map<String, Object> model = new HashMap<>();
-    model.put("url", url);
+    model.put("resetUrl", url);
     model.put("userName", user.getLogin());
     String html = templateService.build("reset-password-email.ftl", model);
 

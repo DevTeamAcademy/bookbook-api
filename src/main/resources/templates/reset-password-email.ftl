@@ -17,7 +17,7 @@
 <h1>Bookbook</h1>
 <h1>${userName}</h1>
 <p>
-    <span style="color: #ff6600;"><a style="color: #ff6600;" title="Verify user" href=${url}>Verify user</a></span>
+    <span style="color: #ff6600;"><a style="color: #ff6600;" title="Verify user" href=${resetUrl}>Change Password</a></span>
 </p>
 
 </body>
