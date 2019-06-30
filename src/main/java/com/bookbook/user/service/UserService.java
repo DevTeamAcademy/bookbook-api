@@ -105,7 +105,7 @@ public class UserService extends AbstractPersistenceService<User> {
   }
 
   public boolean existsByEmail(String email) {
-    return repository.existsByEmail(email);
+    return repository.existsByMail(email);
   }
 
   public boolean existsByLogin(String login) {
@@ -118,7 +118,7 @@ public class UserService extends AbstractPersistenceService<User> {
 
 
   public Optional<User> findOneByLoginOrEmail(String loginOrEmail) {
-    return repository.findOneByLoginOrEmail(loginOrEmail, loginOrEmail);
+    return repository.findOneByLoginOrMail(loginOrEmail, loginOrEmail);
   }
 
   public void changePassword(String newPassword) {
