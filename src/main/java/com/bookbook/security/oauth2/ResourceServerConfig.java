@@ -12,8 +12,6 @@ import static com.bookbook.general.config.SwaggerConfig.SWAGGER_RESOURCES;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-  public static final String CHANGE_PASSWORD_PRIVILEGE = "CHANGE_PASSWORD_PRIVILEGE";
-
 //  @Autowired
 //  private ApplicationContext applicationContext;
 //  @Autowired(required = false)
@@ -39,7 +37,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .antMatchers(HttpMethod.GET, "/user/new").permitAll()
         //-----PASSWORD----
         .antMatchers(HttpMethod.GET, "/password/reset", "/password/forgot").permitAll()
-        .antMatchers(HttpMethod.GET, "/password/changeFromReset").hasAuthority(CHANGE_PASSWORD_PRIVILEGE)
 
         .anyRequest().authenticated();
   }

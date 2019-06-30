@@ -4,14 +4,15 @@ import com.bookbook.general.exception.InvalidParameterException;
 import com.bookbook.general.exception.ValidationException;
 import com.bookbook.mail.dto.Mail;
 import com.bookbook.mail.service.MailService;
-import com.bookbook.security.service.CustomTokenDetails;
+import com.bookbook.security.service.CustomAuthentication;
+import com.bookbook.security.service.UserDetailsServiceImpl;
 import com.bookbook.template.service.TemplateService;
 import com.bookbook.user.domain.PasswordResetToken;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.repository.ResetPasswordTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
@@ -45,6 +46,8 @@ public class PasswordService {
   private AuthorizationServerTokenServices authorizationServerTokenServices;
   @Autowired
   private TemplateService templateService;
+  @Autowired
+  private UserDetailsServiceImpl userDetailsService;
 
   public void change(String newPassword) {
     userService.changePassword(newPassword);
@@ -95,11 +98,12 @@ public class PasswordService {
   }
 
   public String generateAccessToken(String userGuid) {
-    List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE"));
-    OAuth2Request oAuth2Request = new OAuth2Request(null, "frontend", authorities, true, new HashSet<>(Arrays.asList("read", "write")), null, null, null, null);
-    CustomTokenDetails tokenDetails = new CustomTokenDetails(userGuid);
-    OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, null);
-    oAuth2Authentication.setDetails(tokenDetails);
+    UserDetails userDetails = userDetailsService.loadUserByGuid(userGuid);
+    CustomAuthentication customAuthentication = new CustomAuthentication(userDetails);
+
+    OAuth2Request oAuth2Request = new OAuth2Request(null, "frontend", userDetails.getAuthorities(), true, new HashSet<>(Arrays.asList("read", "write")), null, null, null, null);
+
+    OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(oAuth2Request, customAuthentication);
     return authorizationServerTokenServices.createAccessToken(oAuth2Authentication).getValue();
   }
 
