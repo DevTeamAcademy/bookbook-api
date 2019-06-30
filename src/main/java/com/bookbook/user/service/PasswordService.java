@@ -65,7 +65,6 @@ public class PasswordService {
     passwordResetRepository.save(passwordResetToken);
 
     String url = UriComponentsBuilder.fromHttpUrl(resetPasswordUrl)
-        .queryParam("userGuid", user.getGuid())
         .queryParam("token", token)
         .build().toUriString();
 
