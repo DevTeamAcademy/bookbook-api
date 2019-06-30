@@ -112,5 +112,4 @@ public class PasswordService {
     passwordResetRepository.deleteByExpirationLessThanEqual(now);
   }
 
-
 }
