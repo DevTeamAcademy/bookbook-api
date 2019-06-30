@@ -17,19 +17,19 @@ public class PasswordController {
     passwordService.forgot(loginOrEmail);
   }
 
-  @GetMapping("/reset")
-  public RedirectView reset(String token) {
+  @GetMapping(value = "/reset", params = "token")
+  public RedirectView reset(@RequestParam String token) {
     String url = passwordService.reset(token);
     return new RedirectView(url);
   }
 
-  @PutMapping("/change")
-  public void updatePassword(String newPassword) {
+  @PutMapping(value = "/change", params = "newPassword")
+  public void updatePassword(@RequestParam String newPassword) {
     passwordService.change(newPassword);
   }
 
-  @PutMapping("/changeFromReset")
-  public void changePasswordFromForgot(String newPassword) {
+  @PutMapping(value = "/changeFromReset", params = "newPassword")
+  public void changePasswordFromForgot(@RequestParam String newPassword) {
     passwordService.change(newPassword);
   }
 
