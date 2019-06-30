@@ -88,7 +88,7 @@
             <column name="user_guid" type="nvarchar(40)">
                 <constraints nullable="false"/>
             </column>
-            <column name="user_token" type="nvarchar(40)">
+            <column name="token" type="nvarchar(40)">
                 <constraints nullable="false"/>
             </column>
             <column name="expiration_date_time" type="datetime">

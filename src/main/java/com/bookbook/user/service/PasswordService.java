@@ -6,7 +6,7 @@ import com.bookbook.mail.dto.Mail;
 import com.bookbook.mail.service.MailService;
 import com.bookbook.security.service.CustomTokenDetails;
 import com.bookbook.template.service.TemplateService;
-import com.bookbook.user.domain.ResetPasswordToken;
+import com.bookbook.user.domain.PasswordResetToken;
 import com.bookbook.user.domain.User;
 import com.bookbook.user.repository.ResetPasswordTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,11 +58,11 @@ public class PasswordService {
     User user = userOptional.get();
     String token = UUID.randomUUID().toString();
 
-    ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
-    resetPasswordToken.setToken(token);
-    resetPasswordToken.setUserGuid(user.getGuid());
-    resetPasswordToken.setExpiration(LocalDateTime.now().plusHours(resetPasswordExpiration.toHours()));
-    passwordResetRepository.save(resetPasswordToken);
+    PasswordResetToken passwordResetToken = new PasswordResetToken();
+    passwordResetToken.setToken(token);
+    passwordResetToken.setUserGuid(user.getGuid());
+    passwordResetToken.setExpiration(LocalDateTime.now().plusHours(resetPasswordExpiration.toHours()));
+    passwordResetRepository.save(passwordResetToken);
 
     String url = UriComponentsBuilder.fromHttpUrl(resetPasswordUrl)
         .queryParam("userGuid", user.getGuid())
@@ -84,8 +84,8 @@ public class PasswordService {
   }
 
   public String reset(String token) {
-    ResetPasswordToken reset = passwordResetRepository.findOneByToken(token)
-        .filter(resetPasswordToken -> LocalDateTime.now().isAfter(resetPasswordToken.getExpiration()))
+    PasswordResetToken reset = passwordResetRepository.findOneByToken(token)
+        .filter(passwordResetToken -> LocalDateTime.now().isAfter(passwordResetToken.getExpiration()))
         .orElseThrow(() -> new InvalidParameterException("token_expired"));
 
     passwordResetRepository.delete(reset);
