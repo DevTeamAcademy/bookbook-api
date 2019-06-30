@@ -16,7 +16,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.Duration;
@@ -30,7 +29,7 @@ public class PasswordService {
   private Duration resetPasswordExpiration;
   @Value("${url.frontEnd}/user/resetPassword")
   private String resetPasswordUrl;
-  @Value("${url.frontEnd}/user/changePassword")
+  @Value("${url.frontEnd}/user/reset")
   private String changePasswordUrl;
   @Value("${mail.from}")
   private String fromMail;
@@ -46,7 +45,11 @@ public class PasswordService {
   @Autowired
   private TemplateService templateService;
 
-  public void forgotPassword(String loginOrEmail) {
+  public void change(String newPassword) {
+    userService.changePassword(newPassword);
+  }
+
+  public void forgot(String loginOrEmail) {
     Optional<User> userOptional = userService.findOneByLoginOrEmail(loginOrEmail);
     if (!userOptional.isPresent()) {
       throw new ValidationException("validation.user.password.reset", "Invalid login or email");
@@ -80,9 +83,7 @@ public class PasswordService {
     mailService.sendMail(mail);
   }
 
-
-  @GetMapping("/change")
-  public String changePassword(String token) {
+  public String reset(String token) {
     ResetPasswordToken reset = passwordResetRepository.findOneByToken(token)
         .filter(resetPasswordToken -> LocalDateTime.now().isAfter(resetPasswordToken.getExpiration()))
         .orElseThrow(() -> new InvalidParameterException("token_expired"));
@@ -107,5 +108,6 @@ public class PasswordService {
     LocalDateTime now = LocalDateTime.now();
     passwordResetRepository.deleteByExpirationLessThanEqual(now);
   }
+
 
 }

@@ -52,7 +52,6 @@ public class UserInfo {
     return oAuth2AuthenticationDetails.getTokenValue();
   }
 
-
   public static boolean hasRole(String roleName) {
     String authorityle = ROLE_PREFIX + roleName;
     return getAuthentication().getAuthorities()

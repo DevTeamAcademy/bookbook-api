@@ -28,6 +28,8 @@ import java.util.Optional;
 @Service
 public class UserService extends AbstractPersistenceService<User> {
 
+  public static final String MIKHALITSYN_GUID = "c6d06535-8fc5-47c2-8d7a-797706e1d834";
+
   @Value("${url.frontEnd}/user/new")
   private String createUserUrl;
   @Value("${mail.from}")
@@ -121,7 +123,7 @@ public class UserService extends AbstractPersistenceService<User> {
 
   public void changePassword(String newPassword) {
     String userGuid = UserInfo.getUserGuid();
-    if ("c6d06535-8fc5-47c2-8d7a-797706e1d834".equals(userGuid)) {
+    if (MIKHALITSYN_GUID.equals(userGuid)) {
       throw new InvalidParameterException("You can not change admin password");
     }
     User user = repository.findById(userGuid).orElseThrow(() -> new InvalidParameterException("Incorrect user with guid: " + userGuid));
