@@ -21,9 +21,9 @@ public class CreateUserValidator implements Validator {
   @Override
   public void validate(Object object, Errors errors) {
     NewUser newUser = (NewUser) object;
-    if (userService.existsByEmail(newUser.getEmail())) {
-      errors.rejectValue("email", "validation.newUser.email.nonUnique", new String[]{newUser.getEmail()},
-          "User with email " + newUser.getEmail() + " already exists.");
+    if (userService.existsByEmail(newUser.getMail())) {
+      errors.rejectValue("email", "validation.newUser.email.nonUnique", new String[]{newUser.getMail()},
+          "User with email " + newUser.getMail() + " already exists.");
     }
     if (userService.existsByLogin(newUser.getLogin())) {
       errors.rejectValue("login", "validation.newUser.loginId.nonUnique", new String[]{newUser.getLogin()},

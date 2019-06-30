@@ -14,7 +14,7 @@
             <column name="password" type="varchar(128)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(50)">
+            <column name="mail" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
             
@@ -34,7 +34,7 @@
     </changeSet>
     
     <changeSet id="add_unique_constrains" author="aploskiy">
-        <addUniqueConstraint tableName="user_profile" columnNames="login, email" constraintName="user_unique_log_mail_crn"/>
+        <addUniqueConstraint tableName="user_profile" columnNames="login, mail" constraintName="user_unique_log_mail_crn"/>
     </changeSet>
     
     <changeSet id="add_indexes" author="aploskiy">
@@ -42,7 +42,7 @@
             <column name="login"/>
         </createIndex>
         <createIndex tableName="user_profile" indexName="user_profile_email_idx">
-            <column name="email"/>
+            <column name="mail"/>
         </createIndex>
     </changeSet>
     
@@ -51,7 +51,7 @@
             <column name="guid" value="c6d06535-8fc5-47c2-8d7a-797706e1d834"/>
             <column name="login" value="MIKHALITSYN"/>
             <column name="password" value="$2a$10$VhKYNy.BJjkyELffHNKtxeonUCOveuV3tO7wahL4nkEqbThQWMBNK"/>
-            <column name="email" value="ploskiy@gmail.com"/>
+            <column name="mail" value="ploskiy@gmail.com"/>
             <column name="version" valueNumeric="0"/>
             <column name="created_by" value="system"/>
             <column name="created_date" valueDate="2019-06-02"/>
@@ -71,7 +71,7 @@
             <column name="password" type="varchar(128)">
                 <constraints nullable="false"/>
             </column>
-            <column name="email" type="varchar(50)">
+            <column name="mail" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="expiration_date_time" type="datetime">

@@ -22,8 +22,8 @@ public class NewUser extends BaseEntity {
   @Column(name = "PASSWORD")
   private String password;
   @NotBlank
-  @Column(name = "EMAIL")
-  private String email;
+  @Column(name = "MAIL")
+  private String mail;
   @JsonIgnore
   @Column(name = "EXPIRATION_DATE_TIME")
   private LocalDateTime expiration;
@@ -44,12 +44,12 @@ public class NewUser extends BaseEntity {
     this.password = password;
   }
 
-  public String getEmail() {
-    return email;
+  public String getMail() {
+    return mail;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setMail(String mail) {
+    this.mail = mail;
   }
 
   public LocalDateTime getExpiration() {

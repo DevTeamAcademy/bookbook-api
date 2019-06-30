@@ -74,7 +74,7 @@ public class UserService extends AbstractPersistenceService<User> {
 
     Mail mail = new Mail()
         .setFrom(fromMail)
-        .setTo(newUser.getEmail())
+        .setTo(newUser.getMail())
         .setSubject("New BookBook user: " + newUser.getLogin())
         .setHtml(html);
 
@@ -95,7 +95,7 @@ public class UserService extends AbstractPersistenceService<User> {
     User user = new User();
     user.setLogin(newUser.getLogin());
     user.setPassword(newUser.getPassword());
-    user.setEmail(newUser.getEmail());
+    user.setMail(newUser.getMail());
     super.create(user);
     newUserRepository.deleteById(newUserGuid);
 

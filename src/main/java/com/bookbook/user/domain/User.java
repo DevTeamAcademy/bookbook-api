@@ -14,8 +14,8 @@ public class User extends AuditedEntity {
   private String login;
   @Column(name = "PASSWORD")
   private String password;
-  @Column(name = "EMAIL")
-  private String email;
+  @Column(name = "MAIL")
+  private String mail;
 
   public String getPassword() {
     return password;
@@ -33,11 +33,11 @@ public class User extends AuditedEntity {
     this.login = login;
   }
 
-  public String getEmail() {
-    return email;
+  public String getMail() {
+    return mail;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setMail(String mail) {
+    this.mail = mail;
   }
 }

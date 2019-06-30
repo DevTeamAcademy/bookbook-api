@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -49,6 +50,7 @@ public class PasswordService {
     userService.changePassword(newPassword);
   }
 
+  @Transactional
   public void forgot(String loginOrEmail) {
     Optional<User> userOptional = userService.findOneByLoginOrEmail(loginOrEmail);
     if (!userOptional.isPresent()) {
@@ -77,7 +79,7 @@ public class PasswordService {
     Mail mail = new Mail()
         .setSubject("Reset password")
         .setFrom(fromMail)
-        .setTo(user.getEmail())
+        .setTo(user.getMail())
         .setHtml(html);
 
     mailService.sendMail(mail);
