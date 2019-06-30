@@ -84,12 +84,12 @@ public class PasswordService {
 
   public String reset(String token) {
     PasswordResetToken reset = passwordResetRepository.findOneByToken(token)
-        .filter(passwordResetToken -> LocalDateTime.now().isAfter(passwordResetToken.getExpiration()))
+        .filter(passwordResetToken -> LocalDateTime.now().isBefore(passwordResetToken.getExpiration()))
         .orElseThrow(() -> new InvalidParameterException("token_expired"));
 
     passwordResetRepository.delete(reset);
 
-    return UriComponentsBuilder.fromHttpUrl(resetPasswordUrl)
+    return UriComponentsBuilder.fromHttpUrl(changePasswordUrl)
         .queryParam("access_token", generateAccessToken(reset.getUserGuid()))
         .build().toUriString();
   }
