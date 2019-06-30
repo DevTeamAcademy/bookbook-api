@@ -28,9 +28,9 @@ public class PasswordService {
 
   @Value("${user.resetPasswordExpiration}")
   private Duration resetPasswordExpiration;
-  @Value("${url.frontEnd}/user/resetPassword")
+  @Value("${url.frontEnd}/password/reset")
   private String resetPasswordUrl;
-  @Value("${url.frontEnd}/user/reset")
+  @Value("${url.frontEnd}/password/change")
   private String changePasswordUrl;
   @Value("${mail.from}")
   private String fromMail;
