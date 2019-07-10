@@ -38,6 +38,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         //-----PASSWORD----
         .antMatchers(HttpMethod.GET, "/password/reset", "/password/forgot").permitAll()
 
-        .anyRequest().authenticated();
+        .antMatchers(HttpMethod.GET, "/graphql", "/graphiql", "/subscriptions").permitAll()
+
+        .anyRequest().permitAll();
   }
 }

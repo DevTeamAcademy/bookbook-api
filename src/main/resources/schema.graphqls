@@ -1,0 +1,15 @@
+type User {
+    guid: ID!
+    login: String!
+    mail: String!
+}
+
+# The Root Query for the application
+type Query {
+    recentUsers(count: Int, offset: Int): [User]!
+}
+
+# The Root Mutation for the application
+type Mutation {
+    writeUser(title: String!, text: String!, category: String) : User!
+}
