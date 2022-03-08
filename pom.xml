@@ -21,7 +21,7 @@
         <java.version>1.8</java.version>
         <spring-security-oauth2.version>2.3.5.RELEASE</spring-security-oauth2.version>
         <spring-security-jwt.version>1.0.9.RELEASE</spring-security-jwt.version>
-        <org.liquibase.version>3.6.3</org.liquibase.version>
+        <org.liquibase.version>4.8.0</org.liquibase.version>
         <guava.version>23.0</guava.version>
         <swagger.version>2.9.2</swagger.version>
     </properties>
